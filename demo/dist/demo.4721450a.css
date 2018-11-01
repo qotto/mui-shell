@@ -1,0 +1,11 @@
+body {
+	margin: 0;
+}
+
+#demo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+/*# sourceMappingURL=demo.4721450a.css.map*/
