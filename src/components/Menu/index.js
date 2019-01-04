@@ -17,9 +17,6 @@ const styles = theme => ({
   drawerHeader: {
     ...theme.mixins.toolbar,
     display: "block",
-    background: `url("${
-      process.env.PUBLIC_URL
-    }/logos/256_bright_margin.png") no-repeat center`,
     backgroundSize: "contain"
   },
   drawerMenu: {
@@ -44,6 +41,7 @@ const Menu = ({
   toggled,
   openMenu,
   closeMenu,
+  menuLogoSrc,
   classes,
   linkFormatter,
   menuLabelFormatter,
@@ -53,7 +51,12 @@ const Menu = ({
 
   const drawer = (
     <Fragment>
-      <Link to="/" className={classes.drawerHeader} onClick={closeMenu} />
+      <Link
+        to="/"
+        className={classes.drawerHeader}
+        style={{ background: `url("${menuLogoSrc}") no-repeat center` }}
+        onClick={closeMenu}
+      />
       <Divider />
       <List component="div" className={classes.drawerMenu}>
         <RoutesContext.Consumer>
@@ -61,27 +64,31 @@ const Menu = ({
             const activeRoute =
               currentRoute &&
               [currentRoute, ...parentRoutes].find(route => route.menu);
-            return flatRoutes.filter(route => route.menu).map(route => (
-              <ListItem
-                key={route.label}
-                component={Link}
-                to={route.path}
-                exact={route.menu.exact}
-                isActive={() =>
-                  route.fullPath === (activeRoute && activeRoute.fullPath)
-                }
-                activeClassName={classes.activeMenuItem}
-                button
-                onClick={closeMenu}
-              >
-                <ListItemIcon>{route.menu.icon}</ListItemIcon>
-                <ListItemText
-                  primary={
-                    menuLabelFormatter ? menuLabelFormatter(route) : route.label
+            return flatRoutes
+              .filter(route => route.menu)
+              .map(route => (
+                <ListItem
+                  key={route.label}
+                  component={Link}
+                  to={route.path}
+                  exact={route.menu.exact}
+                  isActive={() =>
+                    route.fullPath === (activeRoute && activeRoute.fullPath)
                   }
-                />
-              </ListItem>
-            ));
+                  activeClassName={classes.activeMenuItem}
+                  button
+                  onClick={closeMenu}
+                >
+                  <ListItemIcon>{route.menu.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={
+                      menuLabelFormatter
+                        ? menuLabelFormatter(route)
+                        : route.label
+                    }
+                  />
+                </ListItem>
+              ));
           }}
         </RoutesContext.Consumer>
       </List>
@@ -132,6 +139,7 @@ Menu.propTypes = {
   toggled: PropTypes.bool.isRequired,
   openMenu: PropTypes.func.isRequired,
   closeMenu: PropTypes.func.isRequired,
+  menuLogoSrc: PropTypes.string,
   classes: PropTypes.object.isRequired,
   drawerFooter: PropTypes.node,
   linkFormatter: PropTypes.any,

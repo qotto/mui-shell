@@ -39,6 +39,7 @@ class MuiShell extends React.Component {
       classes,
       routes,
       hideMenu,
+      menuLogoSrc,
       leftAppBarComponent,
       rightAppBarComponent,
       appTitle,
@@ -63,6 +64,7 @@ class MuiShell extends React.Component {
             toggled={menuToggled}
             openMenu={this.openMenu}
             closeMenu={this.closeMenu}
+            menuLogoSrc={menuLogoSrc}
             linkFormatter={linkFormatter}
             menuLabelFormatter={menuLabelFormatter}
             drawerFooter={drawerFooter}
@@ -91,6 +93,7 @@ class MuiShell extends React.Component {
 MuiShell.propTypes = {
   routes: routeType.isRequired,
   hideMenu: PropTypes.bool,
+  menuLogoSrc: PropTypes.string,
   leftAppBarComponent: PropTypes.node,
   rightAppBarComponent: PropTypes.node,
   drawerFooter: PropTypes.node,
