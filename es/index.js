@@ -56,6 +56,7 @@ var MuiShell = function (_React$Component) {
         classes = _props.classes,
         routes = _props.routes,
         hideMenu = _props.hideMenu,
+        menuLogoSrc = _props.menuLogoSrc,
         leftAppBarComponent = _props.leftAppBarComponent,
         rightAppBarComponent = _props.rightAppBarComponent,
         appTitle = _props.appTitle,
@@ -78,6 +79,7 @@ var MuiShell = function (_React$Component) {
         toggled: menuToggled,
         openMenu: this.openMenu,
         closeMenu: this.closeMenu,
+        menuLogoSrc: menuLogoSrc,
         linkFormatter: linkFormatter,
         menuLabelFormatter: menuLabelFormatter,
         drawerFooter: drawerFooter
@@ -108,6 +110,7 @@ var MuiShell = function (_React$Component) {
 MuiShell.propTypes = process.env.NODE_ENV !== "production" ? {
   routes: routeType.isRequired,
   hideMenu: PropTypes.bool,
+  menuLogoSrc: PropTypes.string,
   leftAppBarComponent: PropTypes.node,
   rightAppBarComponent: PropTypes.node,
   drawerFooter: PropTypes.node,

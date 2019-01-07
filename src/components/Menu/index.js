@@ -16,8 +16,7 @@ import RoutesContext from "../../RoutesContext";
 const styles = theme => ({
   drawerHeader: {
     ...theme.mixins.toolbar,
-    display: "block",
-    backgroundSize: "contain"
+    display: "block"
   },
   drawerMenu: {
     flex: 1
@@ -54,7 +53,10 @@ const Menu = ({
       <Link
         to="/"
         className={classes.drawerHeader}
-        style={{ background: `url("${menuLogoSrc}") no-repeat center` }}
+        style={{
+          background: `url("${menuLogoSrc}") no-repeat center`,
+          backgroundSize: "contain"
+        }}
         onClick={closeMenu}
       />
       <Divider />

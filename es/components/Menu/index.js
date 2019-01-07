@@ -18,9 +18,7 @@ import RoutesContext from "../../RoutesContext";
 var styles = function styles(theme) {
   return {
     drawerHeader: _extends({}, theme.mixins.toolbar, {
-      display: "block",
-      background: "url(\"" + process.env.PUBLIC_URL + "/logos/256_bright_margin.png\") no-repeat center",
-      backgroundSize: "contain"
+      display: "block"
     }),
     drawerMenu: {
       flex: 1
@@ -45,6 +43,7 @@ var Menu = function Menu(_ref) {
   var toggled = _ref.toggled,
       openMenu = _ref.openMenu,
       closeMenu = _ref.closeMenu,
+      menuLogoSrc = _ref.menuLogoSrc,
       classes = _ref.classes,
       linkFormatter = _ref.linkFormatter,
       menuLabelFormatter = _ref.menuLabelFormatter,
@@ -55,7 +54,15 @@ var Menu = function Menu(_ref) {
   var drawer = React.createElement(
     Fragment,
     null,
-    React.createElement(Link, { to: "/", className: classes.drawerHeader, onClick: closeMenu }),
+    React.createElement(Link, {
+      to: "/",
+      className: classes.drawerHeader,
+      style: {
+        background: "url(\"" + menuLogoSrc + "\") no-repeat center",
+        backgroundSize: "contain"
+      },
+      onClick: closeMenu
+    }),
     React.createElement(Divider, null),
     React.createElement(
       List,
@@ -159,6 +166,7 @@ Menu.propTypes = process.env.NODE_ENV !== "production" ? {
   toggled: PropTypes.bool.isRequired,
   openMenu: PropTypes.func.isRequired,
   closeMenu: PropTypes.func.isRequired,
+  menuLogoSrc: PropTypes.string,
   classes: PropTypes.object.isRequired,
   drawerFooter: PropTypes.node,
   linkFormatter: PropTypes.any,
