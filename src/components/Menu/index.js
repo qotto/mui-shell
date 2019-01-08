@@ -53,10 +53,12 @@ const Menu = ({
       <Link
         to="/"
         className={classes.drawerHeader}
-        style={{
-          background: `url("${menuLogoSrc}") no-repeat center`,
-          backgroundSize: "contain"
-        }}
+        style={
+          menuLogoSrc && {
+            background: `url("${menuLogoSrc}") no-repeat center`,
+            backgroundSize: "contain"
+          }
+        }
         onClick={closeMenu}
       />
       <Divider />

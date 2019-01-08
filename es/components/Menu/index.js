@@ -57,7 +57,7 @@ var Menu = function Menu(_ref) {
     React.createElement(Link, {
       to: "/",
       className: classes.drawerHeader,
-      style: {
+      style: menuLogoSrc && {
         background: "url(\"" + menuLogoSrc + "\") no-repeat center",
         backgroundSize: "contain"
       },
