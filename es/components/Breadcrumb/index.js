@@ -1,5 +1,3 @@
-var _class, _temp2;
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -115,7 +113,7 @@ var BreadcrumbItem = function BreadcrumbItem(_ref) {
         mini: true,
         disabled: match.isExact,
         component: Link,
-        to: lastLocation[match.url || "/"] || match.url,
+        to: lastLocation[route.label] || match.url,
         color: match.isExact ? "default" : "primary",
         className: classes.breadcrumbButton,
         classes: { disabled: classes.disabled }
@@ -201,7 +199,7 @@ var BackButton = function BackButton(_ref3) {
 
 var isIOS = navigator && navigator.platform && navigator.platform.match(/iPhone|iPod|iPad/);
 
-var Breadcrumb = (_temp2 = _class = function (_PureComponent) {
+var Breadcrumb = function (_PureComponent) {
   _inherits(Breadcrumb, _PureComponent);
 
   function Breadcrumb() {
@@ -213,11 +211,7 @@ var Breadcrumb = (_temp2 = _class = function (_PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _PureComponent.call.apply(_PureComponent, [this].concat(args))), _this), _this.state = {
-      locations: [],
-      lastLocation: {},
-      position: null
-    }, _this.scrollRight = function () {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _PureComponent.call.apply(_PureComponent, [this].concat(args))), _this), _this.scrollRight = function () {
       if (_this.appBarElt.scrollBy) {
         _this.appBarElt.scrollBy({
           left: 2147483647,
@@ -246,12 +240,10 @@ var Breadcrumb = (_temp2 = _class = function (_PureComponent) {
         location = _props.location,
         history = _props.history,
         match = _props.match,
-        props = _objectWithoutProperties(_props, ["classes", "location", "history", "match"]);
-
-    var _state = this.state,
-        lastLocation = _state.lastLocation,
-        position = _state.position;
-
+        routes = _props.routes,
+        lastLocation = _props.lastLocation,
+        position = _props.position,
+        props = _objectWithoutProperties(_props, ["classes", "location", "history", "match", "routes", "lastLocation", "position"]);
 
     return React.createElement(
       RootRef,
@@ -276,48 +268,36 @@ var Breadcrumb = (_temp2 = _class = function (_PureComponent) {
             position: position,
             history: history
           }),
-          React.createElement(
-            RoutesContext.Consumer,
-            null,
-            function (_ref4) {
-              var routes = _ref4.routes;
-              return React.createElement(BreadcrumbRoute, _extends({
-                route: routes,
-                match: matchPath(location.pathname, { path: routes.path }),
-                classes: classes,
-                location: location,
-                lastLocation: lastLocation
-              }, props));
-            }
-          )
+          React.createElement(BreadcrumbRoute, _extends({
+            route: routes,
+            match: matchPath(location.pathname, { path: routes.path }),
+            classes: classes,
+            location: location,
+            lastLocation: lastLocation
+          }, props))
         )
       )
     );
   };
 
   return Breadcrumb;
-}(PureComponent), _class.getDerivedStateFromProps = function (props, state) {
-  if (props.location !== state.locations[state.position]) {
-    var _extends2;
+}(PureComponent);
 
-    var index = state.locations.findIndex(function (l) {
-      return l.key === props.location.key;
-    });
-    var exists = index !== -1;
-    var position = exists ? index : state.locations.length;
-    var location = _extends({}, props.location, {
-      position: position
-    });
-    var locations = exists ? state.locations : [].concat(state.locations, [location]);
-    var lastLocation = _extends({}, state.lastLocation, (_extends2 = {}, _extends2[location.pathname] = location, _extends2));
+var BreadcrumbWrapper = function BreadcrumbWrapper(props) {
+  return React.createElement(
+    RoutesContext.Consumer,
+    null,
+    function (_ref4) {
+      var routes = _ref4.routes,
+          lastLocation = _ref4.lastLocation,
+          position = _ref4.position;
+      return React.createElement(Breadcrumb, _extends({
+        routes: routes,
+        lastLocation: lastLocation,
+        position: position
+      }, props));
+    }
+  );
+};
 
-    return {
-      locations: locations,
-      lastLocation: lastLocation,
-      position: position
-    };
-  }
-}, _temp2);
-
-
-export default withRouter(withStyles(styles)(Breadcrumb));
+export default withRouter(withStyles(styles)(BreadcrumbWrapper));

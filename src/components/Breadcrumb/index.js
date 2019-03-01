@@ -98,7 +98,7 @@ const BreadcrumbItem = ({
         mini
         disabled={match.isExact}
         component={Link}
-        to={lastLocation[match.url || "/"] || match.url}
+        to={lastLocation[route.label] || match.url}
         color={match.isExact ? "default" : "primary"}
         className={classes.breadcrumbButton}
         classes={{ disabled: classes.disabled }}
@@ -187,39 +187,6 @@ const isIOS =
   navigator.platform.match(/iPhone|iPod|iPad/);
 
 class Breadcrumb extends PureComponent {
-  state = {
-    locations: [],
-    lastLocation: {},
-    position: null
-  };
-
-  static getDerivedStateFromProps = (props, state) => {
-    if (props.location !== state.locations[state.position]) {
-      const index = state.locations.findIndex(
-        l => l.key === props.location.key
-      );
-      const exists = index !== -1;
-      const position = exists ? index : state.locations.length;
-      const location = {
-        ...props.location,
-        position
-      };
-      const locations = exists
-        ? state.locations
-        : [...state.locations, location];
-      const lastLocation = {
-        ...state.lastLocation,
-        [location.pathname]: location
-      };
-
-      return {
-        locations,
-        lastLocation,
-        position
-      };
-    }
-  };
-
   scrollRight = () => {
     if (this.appBarElt.scrollBy) {
       this.appBarElt.scrollBy({
@@ -241,8 +208,16 @@ class Breadcrumb extends PureComponent {
   }
 
   render() {
-    const { classes, location, history, match, ...props } = this.props;
-    const { lastLocation, position } = this.state;
+    const {
+      classes,
+      location,
+      history,
+      match,
+      routes,
+      lastLocation,
+      position,
+      ...props
+    } = this.props;
 
     return (
       <RootRef
@@ -264,18 +239,14 @@ class Breadcrumb extends PureComponent {
                 history={history}
               />
             )}
-            <RoutesContext.Consumer>
-              {({ routes }) => (
-                <BreadcrumbRoute
-                  route={routes}
-                  match={matchPath(location.pathname, { path: routes.path })}
-                  classes={classes}
-                  location={location}
-                  lastLocation={lastLocation}
-                  {...props}
-                />
-              )}
-            </RoutesContext.Consumer>
+            <BreadcrumbRoute
+              route={routes}
+              match={matchPath(location.pathname, { path: routes.path })}
+              classes={classes}
+              location={location}
+              lastLocation={lastLocation}
+              {...props}
+            />
           </div>
         </AppBar>
       </RootRef>
@@ -283,4 +254,17 @@ class Breadcrumb extends PureComponent {
   }
 }
 
-export default withRouter(withStyles(styles)(Breadcrumb));
+const BreadcrumbWrapper = props => (
+  <RoutesContext.Consumer>
+    {({ routes, lastLocation, position }) => (
+      <Breadcrumb
+        routes={routes}
+        lastLocation={lastLocation}
+        position={position}
+        {...props}
+      />
+    )}
+  </RoutesContext.Consumer>
+);
+
+export default withRouter(withStyles(styles)(BreadcrumbWrapper));

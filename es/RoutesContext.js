@@ -11,16 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React from "react";
 import { withRouter, matchPath } from "react-router-dom";
 
-var RoutesContext = React.createContext({
-  routes: null,
-  flatRoutes: null,
-  currentRoute: null,
-  currentMatch: null,
-  lastRoute: null,
-  lastMatch: null,
-  parentRoutes: null,
-  location: null
-});
+var RoutesContext = React.createContext();
 
 export default RoutesContext;
 
@@ -87,7 +78,19 @@ var RoutesProvider = (_temp2 = _class = function (_React$PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$PureComponent.call.apply(_React$PureComponent, [this].concat(args))), _this), _this.state = {}, _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$PureComponent.call.apply(_React$PureComponent, [this].concat(args))), _this), _this.state = {
+      routes: null,
+      flatRoutes: null,
+      currentRoute: null,
+      currentMatch: null,
+      lastRoute: null,
+      lastMatch: null,
+      parentRoutes: null,
+      location: null,
+      locations: [],
+      lastLocation: {},
+      position: null
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   RoutesProvider.prototype.render = function render() {
@@ -108,6 +111,21 @@ var RoutesProvider = (_temp2 = _class = function (_React$PureComponent) {
   var currentRoute = flatRoutes.find(getExactMatch(location.pathname));
   var currentMatch = currentRoute && getExactMatch(location.pathname)(currentRoute);
   var parentRoutes = getParentRoutes(currentRoute);
+  var index = state.locations.findIndex(function (l) {
+    return l.key === location.key;
+  });
+  var exists = index !== -1;
+  var position = exists ? index : state.locations.length;
+  var newLocation = _extends({}, location, {
+    position: position
+  });
+  var locations = exists ? state.locations : [].concat(state.locations, [newLocation]);
+  var lastLocation = state.lastLocation;
+  if (currentRoute) {
+    var _extends2;
+
+    lastLocation = _extends({}, lastLocation, (_extends2 = {}, _extends2[currentRoute.label] = newLocation, _extends2));
+  }
   return {
     routes: enhancedRoutes,
     flatRoutes: flatRoutes,
@@ -116,7 +134,10 @@ var RoutesProvider = (_temp2 = _class = function (_React$PureComponent) {
     parentRoutes: parentRoutes,
     lastRoute: state.currentRoute,
     lastMatch: state.currentMatch,
-    location: location
+    location: location,
+    locations: locations,
+    lastLocation: lastLocation,
+    position: position
   };
 }, _temp2);
 

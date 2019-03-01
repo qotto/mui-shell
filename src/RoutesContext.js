@@ -1,16 +1,7 @@
 import React from "react";
 import { withRouter, matchPath } from "react-router-dom";
 
-const RoutesContext = React.createContext({
-  routes: null,
-  flatRoutes: null,
-  currentRoute: null,
-  currentMatch: null,
-  lastRoute: null,
-  lastMatch: null,
-  parentRoutes: null,
-  location: null
-});
+const RoutesContext = React.createContext();
 
 export default RoutesContext;
 
@@ -68,7 +59,19 @@ const getParentRoutes = child => {
 };
 
 class RoutesProvider extends React.PureComponent {
-  state = {};
+  state = {
+    routes: null,
+    flatRoutes: null,
+    currentRoute: null,
+    currentMatch: null,
+    lastRoute: null,
+    lastMatch: null,
+    parentRoutes: null,
+    location: null,
+    locations: [],
+    lastLocation: {},
+    position: null
+  };
 
   static getDerivedStateFromProps = ({ routes, location }, state) => {
     const enhancedRoutes = enhanceRoute(routes);
@@ -77,6 +80,23 @@ class RoutesProvider extends React.PureComponent {
     const currentMatch =
       currentRoute && getExactMatch(location.pathname)(currentRoute);
     const parentRoutes = getParentRoutes(currentRoute);
+    const index = state.locations.findIndex(l => l.key === location.key);
+    const exists = index !== -1;
+    const position = exists ? index : state.locations.length;
+    const newLocation = {
+      ...location,
+      position
+    };
+    const locations = exists
+      ? state.locations
+      : [...state.locations, newLocation];
+    let lastLocation = state.lastLocation;
+    if (currentRoute) {
+      lastLocation = {
+        ...lastLocation,
+        [currentRoute.label]: newLocation
+      };
+    }
     return {
       routes: enhancedRoutes,
       flatRoutes,
@@ -85,7 +105,10 @@ class RoutesProvider extends React.PureComponent {
       parentRoutes,
       lastRoute: state.currentRoute,
       lastMatch: state.currentMatch,
-      location
+      location,
+      locations,
+      lastLocation,
+      position
     };
   };
 
