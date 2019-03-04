@@ -37,7 +37,6 @@ var styles = function styles(theme) {
     breadcrumbButton: {
       paddingRight: 0,
       paddingLeft: 0,
-      height: "24px",
       minWidth: "auto",
       "&$disabled": {
         color: theme.palette.text.primary,
