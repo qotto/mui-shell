@@ -64,7 +64,8 @@ var MuiShell = function (_React$Component) {
         menuLabelFormatter = _props.menuLabelFormatter,
         linkFormatter = _props.linkFormatter,
         breadcrumbFormatter = _props.breadcrumbFormatter,
-        drawerFooter = _props.drawerFooter;
+        drawerFooter = _props.drawerFooter,
+        rightBreadcrumbRender = _props.rightBreadcrumbRender;
     var menuToggled = this.state.menuToggled;
 
 
@@ -97,7 +98,8 @@ var MuiShell = function (_React$Component) {
           appTitle: appTitle,
           leftAppBarComponent: leftAppBarComponent,
           rightAppBarComponent: rightAppBarComponent,
-          breadcrumbFormatter: breadcrumbFormatter
+          breadcrumbFormatter: breadcrumbFormatter,
+          rightBreadcrumbRender: rightBreadcrumbRender
         }),
         React.createElement(AppRoutes, null)
       )
@@ -118,7 +120,8 @@ MuiShell.propTypes = process.env.NODE_ENV !== "production" ? {
   linkFormatter: PropTypes.any,
   documentTitleFormatter: PropTypes.any,
   menuLabelFormatter: PropTypes.any,
-  breadcrumbFormatter: PropTypes.any
+  breadcrumbFormatter: PropTypes.any,
+  rightBreadcrumbRender: PropTypes.func
 } : {};
 
 export { RoutesContext };

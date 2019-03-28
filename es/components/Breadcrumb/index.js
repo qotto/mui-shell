@@ -32,7 +32,8 @@ var styles = function styles(theme) {
       paddingLeft: "8px",
       whiteSpace: "nowrap",
       position: "relative",
-      minHeight: "36px"
+      minHeight: "36px",
+      display: "flex"
     },
     breadcrumbButton: {
       paddingRight: 0,
@@ -67,7 +68,8 @@ var styles = function styles(theme) {
         transitionProperty: "transform, opacity",
         transitionDuration: "0.2s",
         transitionTimingFunction: "ease"
-      }
+      },
+      flex: 1
     },
     goBackButton: {
       padding: "0 8px",
@@ -242,7 +244,9 @@ var Breadcrumb = function (_PureComponent) {
         routes = _props.routes,
         lastLocation = _props.lastLocation,
         position = _props.position,
-        props = _objectWithoutProperties(_props, ["classes", "location", "history", "match", "routes", "lastLocation", "position"]);
+        currentRoute = _props.currentRoute,
+        rightBreadcrumbRender = _props.rightBreadcrumbRender,
+        props = _objectWithoutProperties(_props, ["classes", "location", "history", "match", "routes", "lastLocation", "position", "currentRoute", "rightBreadcrumbRender"]);
 
     return React.createElement(
       RootRef,
@@ -273,7 +277,8 @@ var Breadcrumb = function (_PureComponent) {
             classes: classes,
             location: location,
             lastLocation: lastLocation
-          }, props))
+          }, props)),
+          rightBreadcrumbRender && rightBreadcrumbRender(currentRoute)
         )
       )
     );
@@ -288,10 +293,12 @@ var BreadcrumbWrapper = function BreadcrumbWrapper(props) {
     null,
     function (_ref4) {
       var routes = _ref4.routes,
+          currentRoute = _ref4.currentRoute,
           lastLocation = _ref4.lastLocation,
           position = _ref4.position;
       return React.createElement(Breadcrumb, _extends({
         routes: routes,
+        currentRoute: currentRoute,
         lastLocation: lastLocation,
         position: position
       }, props));

@@ -125,7 +125,8 @@ var Navbar = function (_React$PureComponent) {
     var _props = this.props,
         classes = _props.classes,
         breadcrumbFormatter = _props.breadcrumbFormatter,
-        appBarProps = _objectWithoutProperties(_props, ["classes", "breadcrumbFormatter"]);
+        rightBreadcrumbRender = _props.rightBreadcrumbRender,
+        appBarProps = _objectWithoutProperties(_props, ["classes", "breadcrumbFormatter", "rightBreadcrumbRender"]);
 
     var _state = this.state,
         navbar = _state.navbar,
@@ -140,7 +141,10 @@ var Navbar = function (_React$PureComponent) {
           return _this2.elt = elt;
         } },
       React.createElement(CustomAppBar, _extends({ className: classes.appBar }, appBarProps)),
-      React.createElement(Breadcrumb, { breadcrumbFormatter: breadcrumbFormatter })
+      React.createElement(Breadcrumb, {
+        breadcrumbFormatter: breadcrumbFormatter,
+        rightBreadcrumbRender: rightBreadcrumbRender
+      })
     );
   };
 

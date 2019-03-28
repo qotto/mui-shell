@@ -47,7 +47,8 @@ class MuiShell extends React.Component {
       menuLabelFormatter,
       linkFormatter,
       breadcrumbFormatter,
-      drawerFooter
+      drawerFooter,
+      rightBreadcrumbRender
     } = this.props;
     const { menuToggled } = this.state;
 
@@ -82,6 +83,7 @@ class MuiShell extends React.Component {
             leftAppBarComponent={leftAppBarComponent}
             rightAppBarComponent={rightAppBarComponent}
             breadcrumbFormatter={breadcrumbFormatter}
+            rightBreadcrumbRender={rightBreadcrumbRender}
           />
           <AppRoutes />
         </div>
@@ -101,7 +103,8 @@ MuiShell.propTypes = {
   linkFormatter: PropTypes.any,
   documentTitleFormatter: PropTypes.any,
   menuLabelFormatter: PropTypes.any,
-  breadcrumbFormatter: PropTypes.any
+  breadcrumbFormatter: PropTypes.any,
+  rightBreadcrumbRender: PropTypes.func
 };
 
 export { RoutesContext };

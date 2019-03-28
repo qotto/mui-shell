@@ -21,7 +21,8 @@ const styles = theme => ({
     paddingLeft: "8px",
     whiteSpace: "nowrap",
     position: "relative",
-    minHeight: "36px"
+    minHeight: "36px",
+    display: "flex"
   },
   breadcrumbButton: {
     paddingRight: 0,
@@ -56,7 +57,8 @@ const styles = theme => ({
       transitionProperty: "transform, opacity",
       transitionDuration: "0.2s",
       transitionTimingFunction: "ease"
-    }
+    },
+    flex: 1
   },
   goBackButton: {
     padding: "0 8px",
@@ -215,6 +217,8 @@ class Breadcrumb extends PureComponent {
       routes,
       lastLocation,
       position,
+      currentRoute,
+      rightBreadcrumbRender,
       ...props
     } = this.props;
 
@@ -246,6 +250,7 @@ class Breadcrumb extends PureComponent {
               lastLocation={lastLocation}
               {...props}
             />
+            {rightBreadcrumbRender && rightBreadcrumbRender(currentRoute)}
           </div>
         </AppBar>
       </RootRef>
@@ -255,9 +260,10 @@ class Breadcrumb extends PureComponent {
 
 const BreadcrumbWrapper = props => (
   <RoutesContext.Consumer>
-    {({ routes, lastLocation, position }) => (
+    {({ routes, currentRoute, lastLocation, position }) => (
       <Breadcrumb
         routes={routes}
+        currentRoute={currentRoute}
         lastLocation={lastLocation}
         position={position}
         {...props}

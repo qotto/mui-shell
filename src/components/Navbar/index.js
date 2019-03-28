@@ -102,7 +102,12 @@ class Navbar extends React.PureComponent {
   };
 
   render() {
-    const { classes, breadcrumbFormatter, ...appBarProps } = this.props;
+    const {
+      classes,
+      breadcrumbFormatter,
+      rightBreadcrumbRender,
+      ...appBarProps
+    } = this.props;
     const { navbar, blockTransition } = this.state;
 
     const navbarClasses = [
@@ -115,7 +120,10 @@ class Navbar extends React.PureComponent {
     return (
       <div className={navbarClasses.join(" ")} ref={elt => (this.elt = elt)}>
         <CustomAppBar className={classes.appBar} {...appBarProps} />
-        <Breadcrumb breadcrumbFormatter={breadcrumbFormatter} />
+        <Breadcrumb
+          breadcrumbFormatter={breadcrumbFormatter}
+          rightBreadcrumbRender={rightBreadcrumbRender}
+        />
       </div>
     );
   }
