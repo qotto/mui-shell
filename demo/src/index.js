@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
@@ -18,9 +18,13 @@ const Page1 = () => <div>Page1</div>;
 
 const Page2 = () => <div>Page2</div>;
 
+const LongPage = () => <div>{Array(100).fill(null).map((_, index) => <Fragment key={index}>{index}<br/></Fragment>)}</div>;
+
 const SubPage1 = () => <div>SubPage1</div>;
 
 const SubPage2 = () => <div>SubPage2</div>;
+
+const SubPage3 = () => <div>{Array(30).fill(null).map((_, index) => <Fragment key={index}>{-index}<br/></Fragment>)}</div>;
 
 const routes = {
   path: "",
@@ -64,6 +68,24 @@ const routes = {
       menu: {
         icon: <PetsIcon />
       }
+    },
+    {
+      path: "/longpage",
+      label: "Long page",
+      component: LongPage,
+      menu: {
+        icon: <PetsIcon />
+      },
+      children: [
+        {
+          path: "/subpage3",
+          label: "Subpage 3",
+          component: SubPage3,
+          menu: {
+            icon: <StarRateIcon />
+          }
+        }
+      ]
     }
   ]
 };
