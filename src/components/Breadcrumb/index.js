@@ -96,7 +96,7 @@ const BreadcrumbItem = ({
       })}
     >
       <Button
-        mini
+        mini="true"
         disabled={match.isExact}
         component={Link}
         to={lastLocation[route.label] || match.url}
@@ -172,7 +172,7 @@ const BreadcrumbRoute = ({
 
 const BackButton = ({ position, history, classes }) => (
   <Button
-    mini
+    mini="true"
     disabled={position === 0}
     onClick={() => history.goBack()}
     color={position === 0 ? "default" : "primary"}

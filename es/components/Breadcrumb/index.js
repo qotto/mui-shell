@@ -111,7 +111,7 @@ var BreadcrumbItem = function BreadcrumbItem(_ref) {
     React.createElement(
       Button,
       {
-        mini: true,
+        mini: "true",
         disabled: match.isExact,
         component: Link,
         to: lastLocation[route.label] || match.url,
@@ -186,7 +186,7 @@ var BackButton = function BackButton(_ref3) {
   return React.createElement(
     Button,
     {
-      mini: true,
+      mini: "true",
       disabled: position === 0,
       onClick: function onClick() {
         return history.goBack();

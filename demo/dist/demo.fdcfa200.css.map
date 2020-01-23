@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./demo/src/style.css"],"names":[],"mappings":"AAAA;AACA;AACA;;AAEA;AACA;AACA;AACA;AACA,C","file":"demo.fdcfa200.css","sourcesContent":["body {\n\tmargin: 0;\n}\n\n#demo {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}"],"sourceRoot":""}

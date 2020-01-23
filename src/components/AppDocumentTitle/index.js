@@ -1,7 +1,14 @@
-import React from "react";
-import DocumentTitle from "react-document-title";
+import React, { useEffect } from "react";
 
 import RoutesContext from "../../RoutesContext";
+
+const DocumentTitle = ({ title }) => {
+  useEffect(() => {
+    document.title = title;
+  })
+
+  return null
+}
 
 const AppDocumentTitle = ({ documentTitleFormatter, appTitle }) => (
   <RoutesContext.Consumer>
